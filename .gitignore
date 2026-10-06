@@ -41,3 +41,17 @@ example
 # generated native folders
 /ios
 /android
+
+# Environment variables (jika nanti ada API key rahasia)
+.env
+
+# Windows thumbnail cache
+Thumbs.db
+ehthumbs.db
+
+# Editor directories
+.vscode/
+.idea/
+
+# Log files
+*.log
