@@ -1,56 +1,54 @@
-# Welcome to your Expo app 👋
+# Back Room Barbershop Mobile App 💈
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplikasi mobile reservasi antrean dan booking barbershop (*"Potong rapi, tanpa antre"*). Aplikasi ini membantu pelanggan memilih cabang, memilih capster, menjadwalkan kunjungan, memantau antrean via E-ticket, serta mengumpulkan poin loyalitas.
 
-## Get started
+## 🚀 Fitur Utama
 
-1. Install dependencies
+- **Pilih Cabang**: Informasi jarak, alamat, dan status operasional cabang.
+- **Pilih Capster**: Filter capster berdasarkan keahlian dan ketersediaan hari ini.
+- **Layanan & Penjadwalan**: Pemilihan ragam servis potong rambut dan slot jam (pagi, siang, sore).
+- **Konfirmasi & E-Ticket Antrean**: Tiket digital dengan nomor antrean, QR code, dan status antrean real-time.
+- **Poin Loyalitas**: Sistem 1 poin per booking selesai (10 poin = 1 potong gratis).
+- **Riwayat Booking & Review**: Pantau riwayat kunjungan dan beri ulasan capster.
 
+## 🛠️ Teknologi
+
+- **Framework**: [React Native](https://reactnative.dev/) dengan [Expo](https://expo.dev/) (SDK 52)
+- **Routing**: [Expo Router](https://docs.expo.dev/router/introduction/) (File-based routing)
+- **Styling**: [NativeWind](https://www.nativewind.dev/) (Tailwind CSS v3)
+- **Typography**: `@expo-google-fonts/domine` & `@expo-google-fonts/public-sans`
+- **Icons**: `lucide-react-native`
+- **Language**: TypeScript
+
+## 📂 Struktur Proyek
+
+```text
+src/
+├── app/                  # File-based routing (Expo Router)
+│   ├── _layout.tsx       # Root layout & font loading
+│   └── index.tsx         # Entry screen
+├── components/           # Reusable UI components
+│   └── ui/               # Button, TextField, dsb.
+├── constants/            # Palet warna dan konfigurasi
+│   └── palette.ts
+├── screens/              # Halaman / Screen views
+│   └── LoginScreen.tsx
+└── docs/                 # Dokumentasi desain & alur layar
+```
+
+## 🏁 Memulai Pengembangan
+
+1. **Install dependensi**:
    ```bash
    npm install
    ```
 
-2. Start the app
-
+2. **Jalankan aplikasi**:
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+3. **Buka di perangkat**:
+   - Tekan `a` untuk Android Emulator atau scan QR code melalui aplikasi **Expo Go**.
+   - Tekan `i` untuk iOS Simulator.
+   - Tekan `w` untuk menjalankan di web browser.

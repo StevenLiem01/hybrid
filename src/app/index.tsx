@@ -1,14 +1,12 @@
-import '../../global.css';
-import React from 'react';
-import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+
 import LoginScreen from '@/screens/LoginScreen';
 
-export default function App() {
+export default function Index() {
   return (
-    <View className="flex-1">
+    <>
       <LoginScreen />
       <StatusBar style="light" />
-    </View>
+    </>
   );
 }
