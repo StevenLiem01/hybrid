@@ -12,15 +12,15 @@ type Props = TextInputProps & {
 
 export default function TextField({ label, error, left, right, ...inputProps }: Props) {
     const [focused, setFocused] = useState(false);
-    const border = error ? 'border-danger' : focused ? 'border-brass' : 'border-line';
+    const border = error ? 'border-danger' : focused ? 'border-pole' : 'border-border';
 
     return (
         <View className="gap-1.5">
-            <Text className="font-body-medium text-xs uppercase tracking-wider text-bone-muted">
+            <Text className="font-body-medium text-xs text-ink-muted">
                 {label}
             </Text>
             <View
-                className={`h-[52px] flex-row items-center rounded-control border bg-surface-raised px-3 ${border}`}>
+                className={`h-[52px] flex-row items-center rounded-control border bg-muted px-3 ${border}`}>
                 {left}
                 <TextInput
                     {...inputProps}
@@ -32,9 +32,9 @@ export default function TextField({ label, error, left, right, ...inputProps }: 
                         setFocused(false);
                         inputProps.onBlur?.(e);
                     }}
-                    placeholderTextColor={colors.boneMuted}
-                    selectionColor={colors.brass}
-                    className="flex-1 py-0 font-body text-[15px] text-bone"
+                    placeholderTextColor={colors.inkFaint}
+                    selectionColor={colors.pole}
+                    className="flex-1 py-0 font-body text-[15px] text-ink"
                 />
                 {right}
             </View>

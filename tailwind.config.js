@@ -5,16 +5,32 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        ink: "#16130F",
-        surface: {DEFAULT: "#1F1B16", raised: "#2A241D"},
-        line: "#3a3228",
-        bone: { DEFAULT: "#F1EADB", muted: "#A89C88"},
-        brass: { DEFAULT: "#C8963E", pressed: "#A87B2C"},
-        oxblood: "#8C2F2B",
-        "pole-navy": "#27405E",
-        success: "#7A8B4A",
-        warning: "#D9822B",
-        danger: "#E06A5F",
+        paper: "#FAF9F6",
+        card: "#FFFFFF",
+        muted: "#F1EFEA",
+        border: "#E4E1DA",
+        ink: {
+          DEFAULT: "#1A1917",
+          muted: "#6B675F",
+          faint: "#8A857B",
+        },
+        pole: {
+          DEFAULT: "#25405F",
+          pressed: "#1B3049",
+          soft: "#E3E9F1",
+        },
+        success: {
+          DEFAULT: "#3F6B3A",
+          soft: "#E4EEDF",
+        },
+        warning: {
+          DEFAULT: "#9A5B0F",
+          soft: "#F6E8D2",
+        },
+        danger: {
+          DEFAULT: "#B3261E",
+          soft: "#F6E0DE",
+        },
       },
       fontFamily: {
         display: ["Domine_400Regular"],
@@ -24,8 +40,9 @@ module.exports = {
         "body-bold": ["PublicSans_700Bold"],
       },
       borderRadius: {
-        card: "12px",
         control: "10px",
+        card: "12px",
+        pill: "9999px",
       },
     },
   },

@@ -21,11 +21,11 @@ export default function Button({
 }: Props) {
     const isPrimary = variant === 'primary';
     const container = disabled
-        ? 'bg-surface-raised'
+        ? 'bg-muted'
         : isPrimary
-            ? 'bg-brass active:bg-brass-pressed'
-            : 'border border-line active:bg-surface-raised';
-    const text = disabled ? 'text-bone-muted' : isPrimary ? 'text-ink' : 'text-bone';
+            ? 'bg-pole active:bg-pole-pressed'
+            : 'bg-card border border-border active:bg-muted';
+    const text = disabled ? 'text-ink-faint' : isPrimary ? 'text-paper' : 'text-ink';
 
     return (
         <Pressable
@@ -34,7 +34,7 @@ export default function Button({
             accessibilityRole="button"
             className={`h-[52px] flex-row items-center justify-center gap-2 rounded-control ${container}`}>
             {loading ? (
-                <ActivityIndicator color={isPrimary ? colors.ink : colors.bone} />
+                <ActivityIndicator color={isPrimary ? colors.paper : colors.ink} />
             ) : (
                 <>
                     {icon}

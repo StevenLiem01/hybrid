@@ -6,7 +6,7 @@ export default function Index() {
   return (
     <>
       <LoginScreen />
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
     </>
   );
 }
