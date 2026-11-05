@@ -32,13 +32,14 @@ export default function Button({
             onPress={onPress}
             disabled={disabled || loading}
             accessibilityRole="button"
+            accessibilityState={{ disabled: disabled || loading, busy: loading }}
             className={`h-[52px] flex-row items-center justify-center gap-2 rounded-control ${container}`}>
             {loading ? (
                 <ActivityIndicator color={isPrimary ? colors.paper : colors.ink} />
             ) : (
                 <>
                     {icon}
-                    <Text className={`font-body-semibold text-[15px] ${text}`}>{label}</Text>
+                    <Text className={`font-body-semibold text-body ${text}`}>{label}</Text>
                 </>
             )}
         </Pressable>

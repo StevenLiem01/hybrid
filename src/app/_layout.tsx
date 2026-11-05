@@ -5,13 +5,27 @@ import {
   PublicSans_400Regular,
   PublicSans_500Medium,
   PublicSans_600SemiBold,
-  PublicSans_700Bold,
 } from '@expo-google-fonts/public-sans';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+import { colors } from '@/constants/palette';
+import { AuthProvider } from './auth';
 
 SplashScreen.preventAutoHideAsync();
+
+const AppTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: colors.paper,
+    card: colors.card,
+    text: colors.ink,
+    border: colors.border,
+    primary: colors.pole,
+  },
+};
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -19,7 +33,6 @@ export default function RootLayout() {
     PublicSans_400Regular,
     PublicSans_500Medium,
     PublicSans_600SemiBold,
-    PublicSans_700Bold,
   });
 
   useEffect(() => {
@@ -28,13 +41,16 @@ export default function RootLayout() {
     }
   }, [loaded, error]);
 
-  if (!loaded && !error) {
-    return null;
-  }
+  useEffect(() => {
+    StatusBar.setStyle('dark');
+  }, []);
+  if (!loaded && !error) return null;
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="index" />
-    </Stack>
+    <ThemeProvider value={AppTheme}>
+      <AuthProvider>
+        <Stack screenOptions={{ headerShown: false }} />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }

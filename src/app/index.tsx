@@ -1,12 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
+import { Redirect } from 'expo-router';
 
-import LoginScreen from '@/screens/LoginScreen';
+import { useAuth } from './auth';
 
 export default function Index() {
-  return (
-    <>
-      <LoginScreen />
-      <StatusBar style="dark" />
-    </>
-  );
+  const { user } = useAuth();
+  return <Redirect href={user ? './home' : './login'} />;
 }
