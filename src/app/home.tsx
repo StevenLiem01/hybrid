@@ -1,12 +1,13 @@
 import { Redirect } from "expo-router";
 import { Image, Pressable, ScrollView, Text, View } from 'react-native';
-import { ArrowRight, Check, Clock, Package, Plus, Scissors, Star, User } from 'lucide-react-native';
+import { ArrowRight, Check, Clock, Plus, Scissors, Star } from 'lucide-react-native';
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Button from '@/components/ui/button';
 import { colors } from '@/constants/palette';
 import { useAuth } from './auth';
+import BottomNav from '@/components/ui/navbar';
 
 const booking = {
     date: 'Sabtu, 14 Nov 2026',
@@ -23,7 +24,7 @@ const barbers = [
 ];
 
 const products = [
-    { id: 'p1', name: 'Kahf Water-based Pomade', category: 'Pomade', price: 'Rp45.000', photo: require('@/components/icon/kahf-pomade.png') },
+    { id: 'p1', name: 'Kahf Water-based Pomade', category: 'Pomade', price: 'Rp45.000', photo: require('@/components/icon/kahf-pomade.jpg') },
     { id: 'p2', name: 'Makarizo Advisor', category: 'Perawatan rambut', price: 'Rp50.000', photo: require('@/components/icon/makarizo-advisor.png') },
     { id: 'p3', name: 'Kahf Beard Serum Advancing', category: 'Jenggot', price: 'Rp150.000', photo: require('@/components/icon/kahf-beard-serum.png') },
     { id: 'p4', name: 'Philips OneBlade', category: 'Trimmer', price: 'Rp600.000', photo: require('@/components/icon/trimmer.png') },
@@ -31,7 +32,7 @@ const products = [
 
 function SectionHeader({ title, actionLabel }: { title: string; actionLabel: string }) {
     return (
-        <View className="mb-3 flex-row items-center justify-betweeen">
+        <View className="mb-3 w-full flex-row items-center justify-betweeen">
             <Text className="font-body-semibold text-title text-ink">{title}</Text>
             <Pressable
                 onPress={() => {
@@ -58,10 +59,8 @@ function BarberCard({
 }) {
     return (
         <View className="w-[210px] gap-2 rounded-card border border-border bg-card p-3">
-            <View className="aspect-[4/5] w-full items-center justify-center overflow-hidden rounded-control border border-border bg-muted">
-                {/* TODO: ganti dengan <Image source={require(...)} /> kalau foto sudah ada */}
+            <View className="aspect-[4/5] w-full overflow-hidden rounded-control border border-border bg-muted">
                 <Image source={barber.photo} className="h-full w-full" resizeMode="cover" />
-                <User size={40} strokeWidth={1.5} color={colors.inkFaint} />
 
                 {favorite ? (
                     <View className="absolute left-2 top-2 rounded-full bg-pole px-2.5 py-1">
@@ -100,7 +99,7 @@ function BarberCard({
 
             <Pressable
                 onPress={() => {
-                    // TODO: buka layar Booking dengan capster ini terpilih
+                    // nunggu booking screen dibuat
                 }}
                 accessibilityRole="button"
                 className="items-center rounded-lg border border-border bg-muted py-2 active:bg-border">
@@ -114,10 +113,8 @@ function ProductCard({ product }: { product: (typeof products)[number] }) {
     return (
         <View className="w-[48.5%] justify-between rounded-card border border-border bg-card p-3">
             <View className="gap-1">
-                <View className="mb-1 aspect-square w-full items-center justify-center overflow-hidden rounded-lg border border-border bg-muted">
-                    {/* TODO: ganti dengan <Image source={require(...)} /> kalau foto sudah ada */}
+                <View className="mb-1 aspect-square w-full overflow-hidden rounded-lg border border-border bg-muted">
                     <Image source={product.photo} className="h-full w-full" resizeMode="cover" />
-                    <Package size={32} strokeWidth={1.5} color={colors.inkFaint} />
                 </View>
                 <Text className="font-body text-caption text-ink-muted">{product.category}</Text>
                 <Text
@@ -131,7 +128,7 @@ function ProductCard({ product }: { product: (typeof products)[number] }) {
                 <Text className="font-body-semibold text-title text-ink">{product.price}</Text>
                 <Pressable
                     onPress={() => {
-                        // TODO: tambah ke keranjang setelah fitur Marketplace dibuat
+                        // nunggu marketplace screen dibuat
                     }}
                     hitSlop={8}
                     accessibilityRole="button"
@@ -229,7 +226,7 @@ export default function Home() {
                     <Button
                         label="Booking sekarang"
                         onPress={() => {
-                            // TODO: buka layar Booking
+                            // nunggu layar booking dibuat
                         }}
                         icon={<Plus size={20} strokeWidth={1.5} color={colors.paper} />}
                     />
@@ -263,6 +260,7 @@ export default function Home() {
                     </View>
                 </View>
             </ScrollView>
+            <BottomNav />
         </SafeAreaView>
     );
 }
