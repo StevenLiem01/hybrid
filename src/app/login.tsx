@@ -59,7 +59,7 @@ export default function LoginScreen() {
                             <Scissors size={30} strokeWidth={1.5} color={colors.pole} />
                         </View>
                         <Text className="mb-1 text-center font-display text-headline-md text-ink">
-                            Selamat Datang
+                            Back Room
                         </Text>
                         <Text className="max-w-[280px] text-center font-body text-body text-ink-muted">
                             Masuk untuk booking jadwal potong rambut

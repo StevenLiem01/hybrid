@@ -104,7 +104,7 @@ export default function RegisterScreen() {
                     <View className="gap-4 rounded-card border border-border bg-card p-4">
                         <TextField
                             label="Nama lengkap"
-                            placeholder="Budi Santoso"
+                            placeholder="Luther King"
                             value={name}
                             onChangeText={(text) => {
                                 setName(text);

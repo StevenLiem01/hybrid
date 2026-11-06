@@ -6,4 +6,5 @@ export const colors = {
     inkMuted: '#6B675F',
     inkFaint: '#8A857B',
     pole: '#25405F',
+    success: '#3F6B3A',
 } as const;
