@@ -1,4 +1,4 @@
-import { Redirect } from "expo-router";
+import { Redirect, useRoute, useRouter } from "expo-router";
 import { Image, Pressable, ScrollView, Text, View } from 'react-native';
 import { ArrowRight, Check, Clock, Plus, Scissors, Star } from 'lucide-react-native';
 import { useState } from "react";
@@ -102,7 +102,7 @@ function BarberCard({
                 }}
                 accessibilityRole="button"
                 className="items-center rounded-lg border border-border bg-muted py-2 active:bg-border">
-                <Text className="font-body-semibold text-caption text-ink">Pilih capster</Text>
+                <Text className="font-body-semibold text-caption text-ink">Pilih Barber</Text>
             </Pressable>
         </View>
     );
@@ -141,6 +141,7 @@ function ProductCard({ product }: { product: (typeof products)[number] }) {
 }
 
 export default function Home() {
+    const router = useRouter();
     const { user, logout } = useAuth();
     const [favoriteIds, setFavoriteIds] = useState<string[]>(['b1', 'b2']);
 
@@ -202,7 +203,7 @@ export default function Home() {
                                     <Image source={barbers[0].photo} className="h-full w-full" resizeMode="cover" />
                                 </View>
                                 <View className="flex-1">
-                                    <Text className="font-body-medium text-caption text-ink-muted">Capster</Text>
+                                    <Text className="font-body-medium text-caption text-ink-muted">Barber</Text>
                                     <Text numberOfLines={1} className="font-body-semibold text-title text-ink">
                                         {booking.barber}
                                     </Text>
@@ -224,16 +225,14 @@ export default function Home() {
                 <View className="mb-8 px-5">
                     <Button
                         label="Booking sekarang"
-                        onPress={() => {
-                            // nunggu layar booking dibuat
-                        }}
+                        onPress={() => router.push('/booking')}
                         icon={<Plus size={20} strokeWidth={1.5} color={colors.paper} />}
                     />
                 </View>
 
                 <View className="mb-8">
                     <View className="px-5">
-                        <SectionHeader title="Capster langgananmu" actionLabel="Semua" />
+                        <SectionHeader title="Barber langgananmu" actionLabel="Semua" />
                     </View>
                     <ScrollView
                         horizontal

@@ -97,7 +97,7 @@ export default function RegisterScreen() {
                     <View className="mb-4 gap-1">
                         <Text className="font-display text-headline-lg text-ink">Buat akun baru</Text>
                         <Text className="font-body text-body text-ink-muted">
-                            Daftar untuk memilih capster langganan dan booking cepat
+                            Daftar untuk memilih barber langganan dan booking cepat
                         </Text>
                     </View>
 
