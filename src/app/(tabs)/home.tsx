@@ -6,8 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import Button from '@/components/ui/button';
 import { colors } from '@/constants/palette';
-import { useAuth } from './auth';
-import BottomNav from '@/components/ui/navbar';
+import { useAuth } from '../auth';
 
 const booking = {
     date: 'Sabtu, 14 Nov 2026',
@@ -260,7 +259,6 @@ export default function Home() {
                     </View>
                 </View>
             </ScrollView>
-            <BottomNav />
         </SafeAreaView>
     );
 }

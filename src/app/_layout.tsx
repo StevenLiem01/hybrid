@@ -7,11 +7,13 @@ import {
   PublicSans_600SemiBold,
 } from '@expo-google-fonts/public-sans';
 import { useFonts } from 'expo-font';
-import { DefaultTheme, Stack, ThemeProvider } from 'expo-router';
+import { DefaultTheme, Stack, ThemeProvider, Tabs } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+
 import { colors } from '@/constants/palette';
 import { AuthProvider } from './auth';
+import TabBar from '@/components/ui/navbar';
 
 SplashScreen.preventAutoHideAsync();
 
