@@ -1,5 +1,6 @@
-import { Check, Clock, Moon, Shuffle, Star, Sun, Sunset, User, ChevronLeft, ChevronRight } from "lucide-react-native";
+import { Check, Clock, Moon, Shuffle, Star, Sun, Sunset, ChevronLeft, ChevronRight } from "lucide-react-native";
 import { useState, type ReactNode } from "react";
+import { useRouter } from 'expo-router';
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -37,6 +38,12 @@ function addDays(base: Date, n: number): Date {
 
 function dayKey(d: Date): number {
     return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+}
+
+function toIsoDate(d: Date): string {
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${d.getFullYear()}-${mm}-${dd}`;
 }
 
 function Slots(fromMinutes: number, toMinutes: number): string[] {
@@ -194,6 +201,7 @@ function Calendar({ year, month, selectedDate, minDate, onSelect, onChangeMonth 
 }
 
 export default function Booking() {
+    const router = useRouter();
     const [minDate] = useState(() => addDays(new Date(), h_1));
 
     // pindahin ke state bareng sama Beranda biar tanda langganan sinkron
@@ -239,7 +247,7 @@ export default function Booking() {
     };
     const selectedServices = services.filter((s) => serviceIds.includes(s.id));
     const totalPrice = selectedServices.reduce((sum, s) => sum + s.price, 0);
-    const totalMinutes = selectedServices.reduce((sum, s) => sum + s.durationMin, 0);
+    const totalMin = selectedServices.reduce((sum, s) => sum + s.durationMin, 0);
 
     const capsterLabel =
         capsterId === 'any'
@@ -249,6 +257,34 @@ export default function Booking() {
         } • ${activeTime ?? 'pilih jam'}`;
 
     const canContinue = activeTime !== null && selectedServices.length > 0;
+
+    const handleContinue = () => {
+        if (!activeTime || selectedServices.length === 0) return;
+
+        const barber =
+            capsterId === 'any'
+                ? barbers.find((b) => !(booked[b.id] ?? []).includes(activeTime))
+                : barbers.find((b) => b.id === capsterId);
+        if (!barber) return;
+
+        const draft = {
+            barber: {
+                id: barber.id,
+                name: barber.name,
+                specialty: barber.specialty,
+                rating: barber.rating,
+            },
+            date: toIsoDate(selectedDate),
+            time: activeTime,
+            services: selectedServices.map(({ name, durationMin, price }) => ({
+                name,
+                durationMin,
+                price,
+            })),
+        };
+
+        router.push({ pathname: '/confirmation', params: { draft: JSON.stringify(draft) } });
+    }
 
     return (
         <SafeAreaView edges={['top']} className="flex-1 bg-paper">
@@ -491,15 +527,13 @@ export default function Booking() {
                     <Text className="font-body text-caption text-ink-muted">{summaryMeta}</Text>
                     <View className="flex-row items-baseline gap-2">
                         <Text className="font-body-semibold text-[18px] text-ink">{Rp(totalPrice)}</Text>
-                        <Text className="font-body text-caption text-ink-muted">({totalMinutes} menit)</Text>
+                        <Text className="font-body text-caption text-ink-muted">({totalMin} menit)</Text>
                     </View>
                 </View>
                 <Button
                     label="Lanjut ke konfirmasi"
                     disabled={!canContinue}
-                    onPress={() => {
-                        // kirim barber, tanggal, jam, dan layanan ke layar konfirmasi
-                    }}
+                    onPress={handleContinue}
                 />
             </View>
         </SafeAreaView>
