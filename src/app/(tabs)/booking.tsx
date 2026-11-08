@@ -1,6 +1,6 @@
-import { Check, Clock, Moon, Shuffle, Star, Sun, Sunset, User } from "lucide-react-native";
+import { Check, Clock, Moon, Shuffle, Star, Sun, Sunset, User, ChevronLeft, ChevronRight } from "lucide-react-native";
 import { useState, type ReactNode } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Button from '@/components/ui/button';
@@ -15,8 +15,8 @@ const barbers = [
 const services = [
     { id: 's1', name: 'Potong Mullet', durationMin: 30, price: 50000, note: 'Pendek di bagian depan, atas, dan samping, tapi panjang di bagian belakang' },
     { id: 's2', name: 'Potong Two Block', durationMin: 30, price: 50000, note: 'Samping dan belakang dipotong pendek, bagian atas dibiarkan panjang' },
-    { id: 's2', name: 'Potong Low Fade', durationMin: 30, price: 50000, note: 'Samping tipis, atas bertekstur. Simpel, bersih, dan on point' },
-    { id: 's2', name: 'Potong French Crop', durationMin: 30, price: 50000, note: 'Samping dan belakang dipotong sangat pendek (fade), bagian atas agak panjang dengan poni pendek rata' },
+    { id: 's3', name: 'Potong Low Fade', durationMin: 30, price: 50000, note: 'Samping tipis, atas bertekstur. Simpel, bersih, dan on point' },
+    { id: 's4', name: 'Potong French Crop', durationMin: 30, price: 50000, note: 'Samping dan belakang dipotong sangat pendek (fade), bagian atas agak panjang dengan poni pendek rata' },
 ];
 
 const booked: Record<string, string[]> = {
@@ -28,12 +28,15 @@ const booked: Record<string, string[]> = {
 const hari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
 const bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
-function buildDays(count: number) {
-    const today = new Date();
-    return Array.from({ length: count }, (_, i) => {
-        const d = new Date(today.getFullYear(), today.getMonth(), today.getDate() + i);
-        return { day: hari[d.getDay()], date: d.getDate(), month: d.getMonth(), year: d.getFullYear() };
-    });
+const h_1 = 1;
+const weekdays = ['Sen', 'Sel', 'Rabu', 'Kam', 'Jum', 'Sab', 'Min'];
+
+function addDays(base: Date, n: number): Date {
+    return new Date(base.getFullYear(), base.getMonth(), base.getDate() + n);
+}
+
+function dayKey(d: Date): number {
+    return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
 }
 
 function Slots(fromMinutes: number, toMinutes: number): string[] {
@@ -67,7 +70,7 @@ const waktu = [
     { label: 'Sore', range: '16.00 - 20.00', Icon: Moon, slots: Slots(16 * 60, 20 * 60) },
 ];
 
-const card_selected = 'border-2 border-pole bg-pole-soft p-[11px]';
+const card_selected = 'border-2 border-pole bg-pole/10 p-[11px]';
 const card_idle = 'border border-border bg-card p-3';
 
 function StepHeader({ step, title, right }: { step: number; title: string; right?: ReactNode }) {
@@ -94,16 +97,122 @@ function Radio({ selected }: { selected: boolean }) {
     );
 }
 
+type CalendarProps = {
+    year: number;
+    month: number;
+    selectedDate: Date;
+    minDate: Date;
+    onSelect: (date: Date) => void;
+    onChangeMonth: (delta: -1 | 1) => void;
+};
+
+function Calendar({ year, month, selectedDate, minDate, onSelect, onChangeMonth }: CalendarProps) {
+    const offset = (new Date(year, month, 1).getDay() + 6) % 7;
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const cells: (number | null)[] = [
+        ...Array<null>(offset).fill(null),
+        ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
+    ];
+    while (cells.length % 7 !== 0) cells.push(null);
+
+    const minKey = dayKey(minDate);
+    const selectedKey = dayKey(selectedDate);
+    const canGoPrev = year * 12 + month > minDate.getFullYear() * 12 + minDate.getMonth();
+
+    return (
+        <View className="rounded-card border border-border bg-card p-3">
+            <View className="mb-2 flex-row items-center justify-between">
+                <Pressable
+                    onPress={() => onChangeMonth(-1)}
+                    disabled={!canGoPrev}
+                    hitSlop={8}
+                    accessibilityRole="button"
+                    accessibilityLabel="Bulan sebelumnya"
+                    className="h-9 w-9 items-center justify-center rounded-full active:bg-muted">
+                    <ChevronLeft size={20} strokeWidth={1.5} color={canGoPrev ? colors.ink : colors.inkFaint} />
+                </Pressable>
+                <Text className="font-body-semibold text-title text-ink">
+                    {bulan[month]} {year}
+                </Text>
+                <Pressable
+                    onPress={() => onChangeMonth(1)}
+                    hitSlop={8}
+                    accessibilityRole="button"
+                    accessibilityLabel="Bulan berikutnya"
+                    className="h-9 w-9 items-center justify-center rounded-full active:bg-muted">
+                    <ChevronRight size={20} strokeWidth={1.5} color={colors.ink} />
+                </Pressable>
+            </View>
+
+            <View className="mb-1 flex-row">
+                {weekdays.map((w) => (
+                    <Text key={w} className="flex-1 text-center font-body-medium text-caption text-ink-muted">
+                        {w}
+                    </Text>
+                ))}
+            </View>
+
+            {chunk(cells, 7).map((week, weekIndex) => (
+                <View key={weekIndex} className="flex-row">
+                    {week.map((n, cellIndex) => {
+                        if (n === null) return <View key={cellIndex} className="h-11 flex-1" />;
+
+                        const date = new Date(year, month, n);
+                        const key = dayKey(date);
+                        const disabled = key < minKey;
+                        const selected = key === selectedKey;
+
+                        return (
+                            <Pressable
+                                key={cellIndex}
+                                onPress={() => onSelect(date)}
+                                disabled={disabled}
+                                accessibilityRole="button"
+                                accessibilityState={{ selected, disabled }}
+                                accessibilityLabel={`${n} ${bulan[month]} ${year}`}
+                                className="h-11 flex-1 items-center justify-center">
+                                <View
+                                    className={`h-9 w-9 items-center justify-center rounded-full ${selected ? 'border-2 border-pole bg-pole-soft' : ''
+                                        }`}>
+                                    <Text
+                                        className={`text-body ${disabled
+                                            ? 'font-body text-ink-faint'
+                                            : selected
+                                                ? 'font-body-semibold text-pole'
+                                                : 'font-body text-ink'
+                                            }`}>
+                                        {n}
+                                    </Text>
+                                </View>
+                            </Pressable>
+                        );
+                    })}
+                </View>
+            ))}
+        </View>
+    );
+}
+
 export default function Booking() {
-    const [days] = useState(() => buildDays(14));
+    const [minDate] = useState(() => addDays(new Date(), h_1));
 
     // pindahin ke state bareng sama Beranda biar tanda langganan sinkron
     const [favoriteIds, setFavoriteIds] = useState<string[]>(['b1']);
 
     const [capsterId, setCapsterId] = useState<string>('b1');
-    const [dayIndex, setDayIndex] = useState(0);
+    const [selectedDate, setSelectedDate] = useState<Date>(minDate);
+    const [viewMonth, setViewMonth] = useState({
+        year: minDate.getFullYear(),
+        month: minDate.getMonth(),
+    });
     const [time, setTime] = useState<string | null>(null);
     const [serviceIds, setServiceIds] = useState<string[]>([]);
+
+    const changeMonth = (delta: -1 | 1) =>
+        setViewMonth(({ year, month }) => {
+            const d = new Date(year, month + delta, 1);
+            return { year: d.getFullYear(), month: d.getMonth() };
+        });
 
     const toggleFavorite = (id: string) =>
         setFavoriteIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
@@ -115,14 +224,19 @@ export default function Booking() {
     const nowMinutes = now.getHours() * 60 + now.getMinutes();
 
     const isUnavailable = (slot: string): boolean => {
-        if (dayIndex === 0 && slotToMinutes(slot) <= nowMinutes) return true;
+        if (dayKey(selectedDate) === dayKey(now) && slotToMinutes(slot) <= nowMinutes) return true;
         if (capsterId === 'any') return barbers.every((b) => (booked[b.id] ?? []).includes(slot));
         return (booked[capsterId] ?? []).includes(slot);
     };
 
     const activeTime = time && !isUnavailable(time) ? time : null;
 
-    const selectedDay = days[dayIndex];
+    const selectedDay = {
+        day: hari[selectedDate.getDay()],
+        date: selectedDate.getDate(),
+        month: selectedDate.getMonth(),
+        year: selectedDate.getFullYear(),
+    };
     const selectedServices = services.filter((s) => serviceIds.includes(s.id));
     const totalPrice = selectedServices.reduce((sum, s) => sum + s.price, 0);
     const totalMinutes = selectedServices.reduce((sum, s) => sum + s.durationMin, 0);
@@ -185,7 +299,7 @@ export default function Booking() {
                                     <View className="flex-row items-start justify-between">
                                         <View>
                                             <View className="h-14 w-12 items-center justify-center overflow-hidden rounded-lg border border-border bg-muted">
-                                                <User size={22} strokeWidth={1.5} color={colors.inkFaint} />
+                                                <Image source={barbers[0].photo} className="h-full w-full" resizeMode="cover" />
                                             </View>
                                             <Pressable
                                                 onPress={() => toggleFavorite(barber.id)}
@@ -243,42 +357,21 @@ export default function Booking() {
                         title="Pilih tanggal"
                         right={
                             <Text className="font-body text-caption text-ink-muted">
-                                {bulan[selectedDay.month]} {selectedDay.year}
+                                {selectedDay.day}, {selectedDay.date}, {bulan[selectedDay.month]}{' '}
+                                {selectedDay.year}
                             </Text>
                         }
                     />
-                    <ScrollView
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        contentContainerClassName="gap-2 px-5 pb-1">
-                        {days.map((d, i) => {
-                            const selected = i === dayIndex;
-                            const caption = i === 0 ? 'Hari ini' : i === 1 ? 'Besok' : bulan[d.month];
-                            return (
-                                <Pressable
-                                    key={`${d.year}-${d.month}-${d.date}`}
-                                    onPress={() => setDayIndex(i)}
-                                    accessibilityRole="radio"
-                                    accessibilityState={{ selected }}
-                                    accessibilityLabel={`${d.day}, ${d.date} ${bulan[d.month]}`}
-                                    className={`h-[78px] w-16 items-center justify-center rounded-lg ${selected ? 'border-2 border-pole bg-pole-soft' : 'border border-border bg-card'
-                                        }`}>
-                                    <Text
-                                        className={`text-caption ${selected ? 'font-body-semibold text-pole' : 'font-body-medium text-ink-muted'
-                                            }`}>
-                                        {d.day}
-                                    </Text>
-                                    <Text
-                                        className={`font-display text-headline-md ${selected ? 'text-pole' : 'text-ink'}`}>
-                                        {d.date}
-                                    </Text>
-                                    <Text className={`text-[11px] ${selected ? 'text-pole' : 'text-ink-muted'}`}>
-                                        {caption}
-                                    </Text>
-                                </Pressable>
-                            );
-                        })}
-                    </ScrollView>
+                    <View className="px-5">
+                        <Calendar
+                            year={viewMonth.year}
+                            month={viewMonth.month}
+                            selectedDate={selectedDate}
+                            minDate={minDate}
+                            onSelect={setSelectedDate}
+                            onChangeMonth={changeMonth}
+                        />
+                    </View>
                 </View>
 
                 <View className="mt-6">
