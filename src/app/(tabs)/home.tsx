@@ -29,18 +29,17 @@ const products = [
     { id: 'p4', name: 'Philips OneBlade', category: 'Trimmer', price: 'Rp600.000', photo: require('@/components/icon/trimmer.png') },
 ];
 
-function SectionHeader({ title, actionLabel }: { title: string; actionLabel: string }) {
+function SectionHeader({ title }: { title: string }) {
+    const router = useRouter();
     return (
         <View className="mb-3 w-full flex-row items-center justify-betweeen">
             <Text className="font-body-semibold text-title text-ink">{title}</Text>
             <Pressable
-                onPress={() => {
-                    // pindah ke layar berikutnya
-                }}
+                onPress={() => router.push('/booking')}
                 hitSlop={12}
                 accessibilityRole="link"
                 className="flex-row items-center gap-1">
-                <Text className="font-body-semibold text-caption text-pole">{actionLabel}</Text>
+                <Text className="font-body-semibold text-caption text-pole"></Text>
                 <ArrowRight size={14} strokeWidth={1.5} color={colors.pole} />
             </Pressable>
         </View>
@@ -48,6 +47,7 @@ function SectionHeader({ title, actionLabel }: { title: string; actionLabel: str
 }
 
 function BarberCard({
+    
     barber,
     favorite,
     onToggleFavorite,
@@ -56,6 +56,7 @@ function BarberCard({
     favorite: boolean;
     onToggleFavorite: () => void;
 }) {
+    const router = useRouter();
     return (
         <View className="w-[210px] gap-2 rounded-card border border-border bg-card p-3">
             <View className="aspect-[4/5] w-full overflow-hidden rounded-control border border-border bg-muted">
@@ -97,9 +98,7 @@ function BarberCard({
             </View>
 
             <Pressable
-                onPress={() => {
-                    // nunggu booking screen dibuat
-                }}
+                onPress={() => router.push('/booking')}
                 accessibilityRole="button"
                 className="items-center rounded-lg border border-border bg-muted py-2 active:bg-border">
                 <Text className="font-body-semibold text-caption text-ink">Pilih Barber</Text>
@@ -109,6 +108,7 @@ function BarberCard({
 }
 
 function ProductCard({ product }: { product: (typeof products)[number] }) {
+    const router = useRouter();
     return (
         <View className="w-[48.5%] justify-between rounded-card border border-border bg-card p-3">
             <View className="gap-1">
@@ -126,9 +126,7 @@ function ProductCard({ product }: { product: (typeof products)[number] }) {
             <View className="mt-2 flex-row items-center justify-between border-t border-border pt-2">
                 <Text className="font-body-semibold text-title text-ink">{product.price}</Text>
                 <Pressable
-                    onPress={() => {
-                        // nunggu marketplace screen dibuat
-                    }}
+                    onPress={() => router.push('/marketplace')}
                     hitSlop={8}
                     accessibilityRole="button"
                     accessibilityLabel={`Tambah ${product.name} ke keranjang`}
@@ -232,7 +230,7 @@ export default function Home() {
 
                 <View className="mb-8">
                     <View className="px-5">
-                        <SectionHeader title="Barber langgananmu" actionLabel="Semua" />
+                        <SectionHeader title="Barber langgananmu" />
                     </View>
                     <ScrollView
                         horizontal
@@ -250,7 +248,7 @@ export default function Home() {
                 </View>
 
                 <View className="px-5">
-                    <SectionHeader title="Produk pilihan" actionLabel="Lihat semua" />
+                    <SectionHeader title="Produk pilihan" />
                     <View className="flex-row flex-wrap justify-between gap-y-3">
                         {products.map((product) => (
                             <ProductCard key={product.id} product={product} />
