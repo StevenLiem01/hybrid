@@ -6,33 +6,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import Button from '@/components/ui/button';
 import { colors } from '@/constants/palette';
-import { useAuth } from '../auth';
-
-const booking = {
-    date: 'Sabtu, 14 Nov 2026',
-    time: '14:00 WIB',
-    barber: 'Ahmad Ianus',
-    service: 'Potong rambut biasa',
-    duration: '45 menit',
-};
-
-const barbers = [
-    { id: 'b1', name: 'Ahmad Ianus', specialty: 'Fade', rating: '4.9', reviews: 142, photo: require('@/components/icon/ahmad-ianus.png') },
-    { id: 'b2', name: 'Muhammad Rizal', specialty: 'Mullet', rating: '4.8', reviews: 98, photo: require('@/components/icon/muhammad-rizal.png') },
-    { id: 'b3', name: 'Drogba', specialty: 'Mohawk', rating: '4.9', reviews: 100, photo: require('@/components/icon/drogba.png') },
-];
-
-const products = [
-    { id: 'p1', name: 'Kahf Water-based Pomade', category: 'Pomade', price: 'Rp45.000', photo: require('@/components/icon/kahf-pomade.jpg') },
-    { id: 'p2', name: 'Makarizo Advisor', category: 'Perawatan rambut', price: 'Rp50.000', photo: require('@/components/icon/makarizo-advisor.png') },
-    { id: 'p3', name: 'Kahf Beard Serum Advancing', category: 'Jenggot', price: 'Rp150.000', photo: require('@/components/icon/kahf-beard-serum.png') },
-    { id: 'p4', name: 'Philips OneBlade', category: 'Trimmer', price: 'Rp600.000', photo: require('@/components/icon/trimmer.png') },
-];
+import { useAuth } from '@/auth/auth';
+import { booking, barbers, products } from '@/constants/dummy';
 
 function SectionHeader({ title }: { title: string }) {
     const router = useRouter();
     return (
-        <View className="mb-3 w-full flex-row items-center justify-betweeen">
+        <View className="mb-3 w-full flex-row items-center justify-between">
             <Text className="font-body-semibold text-title text-ink">{title}</Text>
             <Pressable
                 onPress={() => router.push('/booking')}
@@ -47,7 +27,7 @@ function SectionHeader({ title }: { title: string }) {
 }
 
 function BarberCard({
-    
+
     barber,
     favorite,
     onToggleFavorite,

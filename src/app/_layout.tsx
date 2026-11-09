@@ -12,7 +12,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 
 import { colors } from '@/constants/palette';
-import { AuthProvider } from './auth';
+import { AuthProvider } from '@/auth/auth';
 import TabBar from '@/components/ui/navbar';
 
 SplashScreen.preventAutoHideAsync();

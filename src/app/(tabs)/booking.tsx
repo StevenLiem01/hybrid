@@ -1,4 +1,4 @@
-import { Check, Clock, Moon, Shuffle, Star, Sun, Sunset, ChevronLeft, ChevronRight } from "lucide-react-native";
+import { Check, Clock, Shuffle, Star, ChevronLeft, ChevronRight } from "lucide-react-native";
 import { useState, type ReactNode } from "react";
 import { useRouter } from 'expo-router';
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
@@ -6,79 +6,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import Button from '@/components/ui/button';
 import { colors } from '@/constants/palette';
-
-const barbers = [
-    { id: 'b1', name: 'Ahmad Ianus', specialty: 'Fade', rating: '4.9', reviews: 142, photo: require('@/components/icon/ahmad-ianus.png') },
-    { id: 'b2', name: 'Muhammad Rizal', specialty: 'Mullet', rating: '4.8', reviews: 98, photo: require('@/components/icon/muhammad-rizal.png') },
-    { id: 'b3', name: 'Drogba', specialty: 'Mohawk', rating: '4.9', reviews: 100, photo: require('@/components/icon/drogba.png') },
-];
-
-const services = [
-    { id: 's1', name: 'Potong Mullet', durationMin: 30, price: 50000, note: 'Pendek di bagian depan, atas, dan samping, tapi panjang di bagian belakang' },
-    { id: 's2', name: 'Potong Two Block', durationMin: 30, price: 50000, note: 'Samping dan belakang dipotong pendek, bagian atas dibiarkan panjang' },
-    { id: 's3', name: 'Potong Low Fade', durationMin: 30, price: 50000, note: 'Samping tipis, atas bertekstur. Simpel, bersih, dan on point' },
-    { id: 's4', name: 'Potong French Crop', durationMin: 30, price: 50000, note: 'Samping dan belakang dipotong sangat pendek (fade), bagian atas agak panjang dengan poni pendek rata' },
-];
-
-const booked: Record<string, string[]> = {
-    b1: ['09:00', '09:30', '12:00', '12:30', '14:00', '14:30'],
-    b2: ['09:00', '09:30', '09:30', '10:00', '11:00', '11:30'],
-    b3: ['09:00', '09:30', '11:00', '11:30', '13:30', '14:00'],
-};
-
-const hari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
-const bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+import { barbers, booked, services, hari, bulan, weekdays, waktu, card_selected, card_idle } from '@/constants/dummy';
+import { addDays, dayKey, toIsoDate, slotToMinutes, chunk, Rp } from "@/constants/helper";
 
 const h_1 = 1;
-const weekdays = ['Sen', 'Sel', 'Rabu', 'Kam', 'Jum', 'Sab', 'Min'];
-
-function addDays(base: Date, n: number): Date {
-    return new Date(base.getFullYear(), base.getMonth(), base.getDate() + n);
-}
-
-function dayKey(d: Date): number {
-    return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
-}
-
-function toIsoDate(d: Date): string {
-    const mm = String(d.getMonth() + 1).padStart(2, '0');
-    const dd = String(d.getDate()).padStart(2, '0');
-    return `${d.getFullYear()}-${mm}-${dd}`;
-}
-
-function Slots(fromMinutes: number, toMinutes: number): string[] {
-    const slots: string[] = [];
-    for (let m = fromMinutes; m <= toMinutes; m += 30) {
-        const hh = String(Math.floor(m / 60)).padStart(2, '0');
-        const mm = String(m % 60).padStart(2, '0');
-        slots.push(`${hh}.${mm}`);
-    }
-    return slots;
-}
-
-function slotToMinutes(slot: string): number {
-    const [hh, mm] = slot.split('.').map(Number);
-    return hh * 60 + mm;
-}
-
-function chunk<T>(items: T[], size: number): T[][] {
-    const rows: T[][] = [];
-    for (let i = 0; i < items.length; i += size) rows.push(items.slice(i, i + size));
-    return rows;
-}
-
-function Rp(value: number): string {
-    return `Rp${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`;
-}
-
-const waktu = [
-    { label: 'Pagi', range: '09.00 - 11.30', Icon: Sun, slots: Slots(9 * 60, 11 * 60 + 30) },
-    { label: 'Siang', range: '12.00 - 15.30', Icon: Sunset, slots: Slots(12 * 60, 15 * 60 + 30) },
-    { label: 'Sore', range: '16.00 - 20.00', Icon: Moon, slots: Slots(16 * 60, 20 * 60) },
-];
-
-const card_selected = 'border-2 border-pole bg-pole/10 p-[11px]';
-const card_idle = 'border border-border bg-card p-3';
 
 function StepHeader({ step, title, right }: { step: number; title: string; right?: ReactNode }) {
     return (
@@ -204,7 +135,6 @@ export default function Booking() {
     const router = useRouter();
     const [minDate] = useState(() => addDays(new Date(), h_1));
 
-    // pindahin ke state bareng sama Beranda biar tanda langganan sinkron
     const [favoriteIds, setFavoriteIds] = useState<string[]>(['b1']);
 
     const [capsterId, setCapsterId] = useState<string>('b1');
@@ -335,7 +265,7 @@ export default function Booking() {
                                     <View className="flex-row items-start justify-between">
                                         <View>
                                             <View className="h-14 w-12 items-center justify-center overflow-hidden rounded-lg border border-border bg-muted">
-                                                <Image source={barbers[0].photo} className="h-full w-full" resizeMode="cover" />
+                                                <Image source={barber.photo} className="h-full w-full" resizeMode="cover" />
                                             </View>
                                             <Pressable
                                                 onPress={() => toggleFavorite(barber.id)}

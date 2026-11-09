@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import Button from '@/components/ui/button';
 import { colors } from '@/constants/palette';
+import { hari, bulan } from '@/constants/dummy';
 
 type BookingDraft = {
     barber: { id: string; name: string; specialty: string; rating: string };
@@ -15,9 +16,6 @@ type BookingDraft = {
 };
 
 const note_max = 120;
-
-const hari = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
-const bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
 function ParseDraft(raw?: string): BookingDraft | null {
     if (!raw) return null;

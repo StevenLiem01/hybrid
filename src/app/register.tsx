@@ -1,6 +1,6 @@
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react-native';
 import { useState } from 'react';
-import {useAuth } from './auth';
+import { useAuth } from '@/auth/auth';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -8,7 +8,7 @@ import Button from '@/components/ui/button';
 import TextField from '@/components/ui/text-field';
 import { colors } from '@/constants/palette';
 import { useRouter } from 'expo-router';
-import { formatPhone, phoneDigits } from './formatPhone';
+import { formatPhone, phoneDigits } from '@/auth/formatPhone';
 
 type Errors = { name?: string; phone?: string; password?: string; confirm?: string };
 
@@ -30,7 +30,7 @@ function PasswordToggle({ visible, onToggle }: { visible: boolean; onToggle: () 
 
 export default function RegisterScreen() {
     const router = useRouter();
-    const {register} = useAuth();
+    const { register } = useAuth();
 
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
@@ -68,8 +68,8 @@ export default function RegisterScreen() {
         setLoading(true);
         const result = await register(name, digits, password);
         setLoading(false);
-        if(!result.ok) {
-            setErrors({phone: result.error});
+        if (!result.ok) {
+            setErrors({ phone: result.error });
             return;
         }
         router.replace('./home');
