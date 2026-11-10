@@ -1,9 +1,9 @@
 # Back Room Barbershop - Hybrid Application Development
 # Tema: Services
 
-Nama: Steven Karunia Liem
-NIM: 2802458573
-Kelas: LB95
+- Nama: Steven Karunia Liem
+- NIM: 2802458573
+- Kelas: LB95
 
 ## Lampiran
 - Video Demo: https://drive.google.com/file/d/1-NusIa3wKnoQ05xSTE49HD6xH5JuY_zc/view?usp=sharing
@@ -21,7 +21,7 @@ Kelas: LB95
 
 React Native adalah framework JavaScript untuk membangun aplikasi *cross-platform* (Android & iOS) dengan satu *code base*. Framework ini menerjemahkan komponen React ke elemen UI *native* bawaan OS menggunakan *Bridge*, memberikan performa responsif tanpa bergantung pada *WebView*.
 
-Terdapat tiga keunggulan utama React Native untuk development *hybrid application*:
+Terdapat tiga keunggulan React Native untuk development *hybrid application*:
 1. **Efisiensi:** Satu *code base* untuk iOS dan Android.
 2. **Fast Refresh:** Perubahan kode langsung terlihat di layar tanpa perlu *rebuild* ulang.
 3. **Performa Native:** Merender antarmuka *native* murni sehingga animasi berjalan mulus.
@@ -61,7 +61,7 @@ const router = useRouter();
 ## 🎯 Analisis Kebutuhan & Desain
 
 **Masalah:** 
-Orang-orang biasanya langsung datang ke tempat Barber tapi ternyata harus mengantri karena rame, lalu saya punya ide untuk bikin aplikasi layanan booking potong rambut supaya orang-orang tidak harus mengantri.
+Biasaya orang langsung datang ke tempat Barber tapi harus mengantri karena rame, lalu saya punya ide untuk bikin aplikasi layanan booking potong rambut supaya orang-orang tidak harus mengantri.
 
 **Target User:** 
 Semua pria yang membutuhkan potong rambut.
@@ -83,7 +83,7 @@ Semua pria yang membutuhkan potong rambut.
 | Bukti Pesanan | `confirmation.tsx` | `Modal` (Kode Booking) |
 
 **Alasan Keputusan Desain:**
-Aplikasi menggunakan palet warna minimalis maskulin (hitam, putih, aksen biru kutub) dengan implementasi Conditional Rendering agar layar tetap bersih saat tidak ada pesanan[cite: 10]. Ke depannya, aplikasi akan diintegrasikan dengan Firebase untuk sinkronisasi slot ketersediaan jadwal secara real-time dan penambahan payment gateway pada fitur Toko
+Aplikasi menggunakan palet warna minimalis maskulin dengan implementasi Conditional Rendering agar di halaman utama agar UI tetap bersih.
 
 **Rencana Pengembangan:**
-Untuk development selanjutnya, saya berencana untuk mengintegrasikan backend dengan Firebase supaya *authentication* dan ketersediaan slot jam barbernya bisa *real-time* membuat fitur Toko atau marketplace dan juga fitur Profil. Fitur Toko ini nantinya saya akan menggunakan API *payment gateway* sehingga User bisa membeli produk-produknya. Lalu untuk Profil ini nantinya akan saya develop sederhana saja.
+Saya berencana untuk mengintegrasikan backend dengan Firebase supaya *authentication* dan ketersediaan slot jam barbernya bisa *real-time* membuat fitur Toko atau marketplace dan juga fitur Profil. Fitur Toko ini nantinya saya akan menggunakan API *payment gateway* sehingga User bisa membeli produk-produknya. Lalu untuk Profil akan saya develop sederhana saja.
