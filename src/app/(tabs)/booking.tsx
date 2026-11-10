@@ -266,7 +266,7 @@ export default function Booking() {
                                         <View>
                                             <View className="h-14 w-12 items-center justify-center overflow-hidden rounded-lg border border-border bg-muted">
                                                 <Image source={barber.photo}
-                                                    style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
+                                                style={{ width: '100%', height: '100%', resizeMode: 'cover' }} 
                                                 />
                                             </View>
                                             <Pressable
