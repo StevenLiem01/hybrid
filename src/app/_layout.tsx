@@ -7,13 +7,13 @@ import {
   PublicSans_600SemiBold,
 } from '@expo-google-fonts/public-sans';
 import { useFonts } from 'expo-font';
+import { View } from 'react-native';
 import { DefaultTheme, Stack, ThemeProvider, Tabs } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 
 import { colors } from '@/constants/palette';
 import { AuthProvider } from '@/auth/auth';
-import TabBar from '@/components/ui/navbar';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -51,7 +51,11 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={AppTheme}>
       <AuthProvider>
-        <Stack screenOptions={{ headerShown: false }} />
+        <View className="flex-1 bg-muted/30">
+          <View className="mx-auto flex-1 w-full max-w-[430px] bg-paper shadow-sm">
+            <Stack screenOptions={{ headerShown: false }} />
+          </View>
+        </View>
       </AuthProvider>
     </ThemeProvider>
   );

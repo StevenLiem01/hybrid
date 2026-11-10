@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             return { ok: false, error: 'Nomor ini sudah terdaftar' };
         }
 
-        const created: User = { id: 'u${Date.now()}', name: name.trim(), phone, password };
+        const created: User = { id: `u${Date.now()}`, name: name.trim(), phone, password };
         setUsers((prev) => [...prev, created]);
         setUser(created);
         return { ok: true };

@@ -9,15 +9,6 @@
 
 ---
 
-## 📸 Tangkapan Layar (Screenshots)
-*[Tambahkan screenshot aplikasimu di sini. Contoh format:]*
-<!-- ![Login Screen](./assets/login.png) -->
-<!-- ![Home Screen](./assets/home.png) -->
-<!-- ![Booking Screen](./assets/booking.png) -->
-<!-- ![Confirmation Screen](./assets/confirmation.png) -->
-
----
-
 ## 🚀 Cara Menjalankan Aplikasi
 1. Pastikan Node.js dan Git sudah terinstal.
 2. Clone repositori ini: `git clone https://github.com/StevenLiem01/hybrid`

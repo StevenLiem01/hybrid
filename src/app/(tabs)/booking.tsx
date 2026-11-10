@@ -265,7 +265,9 @@ export default function Booking() {
                                     <View className="flex-row items-start justify-between">
                                         <View>
                                             <View className="h-14 w-12 items-center justify-center overflow-hidden rounded-lg border border-border bg-muted">
-                                                <Image source={barber.photo} className="h-full w-full" resizeMode="cover" />
+                                                <Image source={barber.photo}
+                                                    style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
+                                                />
                                             </View>
                                             <Pressable
                                                 onPress={() => toggleFavorite(barber.id)}

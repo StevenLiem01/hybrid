@@ -1,5 +1,6 @@
 import { Redirect, useRoute, useRouter } from "expo-router";
-import { Image, Pressable, ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Image } from 'expo-image';
 import { ArrowRight, Check, Clock, Plus, Scissors, Star } from 'lucide-react-native';
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -27,7 +28,6 @@ function SectionHeader({ title }: { title: string }) {
 }
 
 function BarberCard({
-
     barber,
     favorite,
     onToggleFavorite,
@@ -39,8 +39,10 @@ function BarberCard({
     const router = useRouter();
     return (
         <View className="w-[210px] gap-2 rounded-card border border-border bg-card p-3">
-            <View className="aspect-[4/5] w-full overflow-hidden rounded-control border border-border bg-muted">
-                <Image source={barber.photo} className="h-full w-full" resizeMode="cover" />
+            <View className="h-[210px] w-full overflow-hidden rounded-control border border-border bg-muted">
+                <Image source={barber.photo}
+                    style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
+                />
 
                 {favorite ? (
                     <View className="absolute left-2 top-2 rounded-full bg-pole px-2.5 py-1">
@@ -92,8 +94,10 @@ function ProductCard({ product }: { product: (typeof products)[number] }) {
     return (
         <View className="w-[48.5%] justify-between rounded-card border border-border bg-card p-3">
             <View className="gap-1">
-                <View className="mb-1 aspect-square w-full overflow-hidden rounded-lg border border-border bg-muted">
-                    <Image source={product.photo} className="h-full w-full" resizeMode="cover" />
+                <View className="mb-1 h-[140px] w-full overflow-hidden rounded-lg border border-border bg-card p-2">
+                    <Image source={product.photo}
+                        style={{ width: '100%', height: '100%', resizeMode: 'contain' }}
+                    />
                 </View>
                 <Text className="font-body text-caption text-ink-muted">{product.category}</Text>
                 <Text
@@ -178,7 +182,10 @@ export default function Home() {
                         <View className="flex-row items-center justify-between rounded-lg border border-border bg-muted p-3">
                             <View className="flex-1 flex-row items-center gap-3">
                                 <View className="h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-border bg-card">
-                                    <Image source={barbers[0].photo} className="h-full w-full" resizeMode="cover" />
+                                    <Image source={barbers[0].photo}
+                                        style={{ width: '100%', height: '100%' }}
+                                        contentFit="cover"
+                                    />
                                 </View>
                                 <View className="flex-1">
                                     <Text className="font-body-medium text-caption text-ink-muted">Barber</Text>

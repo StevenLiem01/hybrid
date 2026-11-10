@@ -67,6 +67,13 @@ export default function LoginScreen() {
                     </View>
 
                     <View className="mb-4 gap-4 rounded-card border border-border bg-card p-4">
+                        {formError ? (
+                            <View className="rounded-control bg-danger-soft border border-danger/30 p-3">
+                                <Text className="text-center font-body-medium text-caption text-danger">
+                                    {formError}
+                                </Text>
+                            </View>
+                        ) : null}
                         <TextField
                             label="Nomor HP"
                             placeholder="812 3456 7890"
