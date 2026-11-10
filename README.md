@@ -1,4 +1,13 @@
 # Back Room Barbershop - Hybrid Application Development
+# Tema: Services
+
+Nama: Steven Karunia Liem
+NIM: 2802458573
+Kelas: LB95
+
+## Lampiran
+- Video Demo: https://drive.google.com/file/d/1-NusIa3wKnoQ05xSTE49HD6xH5JuY_zc/view?usp=sharing
+- Screenshot: https://drive.google.com/drive/folders/1PXjxjcEdL8369QJPFzTNTMO3z1u57WfR?usp=sharing
 
 ## 🚀 Cara Menjalankan Aplikasi
 1. Clone repositori: `git clone https://github.com/StevenLiem01/hybrid`
